@@ -1,0 +1,14 @@
+.container {
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  h3 {
+    font-weight: bold;
+  }
+}
+.isAnswered {
+  padding: 10px;
+}

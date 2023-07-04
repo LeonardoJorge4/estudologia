@@ -1,12 +1,15 @@
+import Link from 'next/link';
 import styles from './Header.module.scss';
 
 export function Header() {
   return (
     <header className={styles.header}>
-      <img
-        src="/logo.png"
-        alt="Logo"
-      />
+      <Link href="/">
+        <img
+          src="/logo.png"
+          alt="Logo"
+        />
+      </Link>
     </header>
   );
 }
