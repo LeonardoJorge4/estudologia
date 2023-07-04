@@ -5,7 +5,7 @@
 ## 📷 Preview do projeto
 
 <div align="center">
-  <img width="855" alt="Estudologia" src="https://github.com/LeonardoJorge4/ignite-shop/assets/69438854/c602062c-5890-40ab-afe9-a975d61b043a" />
+  <img width="855" alt="Estudologia" src="https://github.com/LeonardoJorge4/estudologia/assets/69438854/6672904c-7d7a-4be5-b90a-8e54502c00fb" />
 </div>
 
 ## 🕵️ Sobre
