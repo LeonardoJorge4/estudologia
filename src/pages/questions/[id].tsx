@@ -2,6 +2,7 @@ import { BookQuestionsProps, QuestionProps } from '@src/@types/bookQuestion';
 import { Button } from '@src/components/Button';
 import { api } from '@src/services/api';
 import styles from '@src/styles/pages/Questions.module.scss';
+import { formatTime } from '@src/utils/formatTime';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -9,10 +10,12 @@ export default function Questions() {
   const router = useRouter();
   const [answerValue, setAnswerValue] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState<BookQuestionsProps>(
+  const [currentQuestion, setCurrentQuestion] = useState(
     {} as BookQuestionsProps
   );
   const [newAnswers, setNewAnswers] = useState<QuestionProps[]>([]);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [timerIsRunning, setTimerIsRunning] = useState(true);
 
   useEffect(() => {
     async function loadData() {
@@ -32,6 +35,18 @@ export default function Questions() {
       setAnswerValue('');
     }
   }, [selectedIndex, newAnswers]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timerIsRunning) {
+        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [selectedIndex, timerIsRunning]);
 
   async function handleFinalizeForm() {
     if (newAnswers.length < currentQuestion?.questions?.length) {
@@ -53,15 +68,19 @@ export default function Questions() {
   }
 
   async function handleSubmitAnswer() {
+    setTimerIsRunning(false);
+
     const newObject = {
       ...currentQuestion.questions[selectedIndex],
       answer: answerValue,
+      time: elapsedTime,
     };
 
     if (!newAnswers[selectedIndex]?.answer) {
       setNewAnswers((oldState) => [...oldState, newObject]);
       if (selectedIndex !== currentQuestion.questions.length - 1) {
         setSelectedIndex((prevIndex) => prevIndex + 1);
+        setTimerIsRunning(true);
       }
       setAnswerValue('');
       alert('Resposta criada com sucesso!');
@@ -69,9 +88,12 @@ export default function Questions() {
       newAnswers[selectedIndex] = newObject;
       alert('Resposta editada com sucesso!');
     }
+
+    setElapsedTime(0);
   }
 
   function handlePrevQuestion() {
+    setElapsedTime(0);
     setSelectedIndex((prevIndex) => prevIndex - 1);
   }
 
@@ -81,6 +103,8 @@ export default function Questions() {
 
   return (
     <main className={styles.container}>
+      {timerIsRunning && <time>{formatTime(elapsedTime)}</time>}
+
       <header>
         <span>{currentQuestion?.questions?.[selectedIndex]?.title}</span>
         <p>{currentQuestion?.questions?.[selectedIndex]?.question}</p>

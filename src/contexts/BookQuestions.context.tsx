@@ -34,15 +34,6 @@ export function BookQuestionsProvider({
     }
   }, []);
 
-  const fetchSpecificQuestion = useCallback(async (id: number) => {
-    try {
-      const response = await api.get(`/bookQuestions/${id}`);
-    } catch (error) {
-      alert('Erro ao cadernos de questões');
-      console.log(error);
-    }
-  }, []);
-
   useEffect(() => {
     fetchBookQuestions();
   }, [fetchBookQuestions]);

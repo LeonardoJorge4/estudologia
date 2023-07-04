@@ -3,6 +3,7 @@ export interface QuestionProps {
   title: string;
   question: string;
   answer: string;
+  time?: number;
 }
 
 export interface BookQuestionsProps {

@@ -1,7 +1,7 @@
-import { QuestionProps } from '@src/@types/bookQuestion';
-import { BookQuestionsProps } from '@src/contexts/BookQuestions.context';
+import { BookQuestionsProps, QuestionProps } from '@src/@types/bookQuestion';
 import { api } from '@src/services/api';
 import styles from '@src/styles/pages/Thanks.module.scss';
+import { formatTime } from '@src/utils/formatTime';
 import { GetServerSideProps } from 'next';
 
 interface Props {
@@ -9,9 +9,15 @@ interface Props {
 }
 
 export default function Thanks({ answeredQuestions }: Props) {
+  const totalTime = answeredQuestions.reduce(
+    (acc, item) => acc + Number(item.time),
+    0
+  );
+
   return (
     <main className={styles.container}>
       <h1>Obrigado por enviar!</h1>
+      <span>Duração total da prova: {formatTime(totalTime)}</span>
 
       {answeredQuestions.map((item) => (
         <div key={item.id}>
@@ -19,6 +25,7 @@ export default function Thanks({ answeredQuestions }: Props) {
 
           <span>Resposta:</span>
           <p>{item.answer}</p>
+          <time>Tempo de resposta: {formatTime(Number(item.time))}</time>
         </div>
       ))}
     </main>
