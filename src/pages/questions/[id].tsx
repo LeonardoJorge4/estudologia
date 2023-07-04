@@ -3,6 +3,7 @@ import { Button } from '@src/components/Button';
 import { api } from '@src/services/api';
 import styles from '@src/styles/pages/Questions.module.scss';
 import { formatTime } from '@src/utils/formatTime';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -148,3 +149,22 @@ export default function Questions() {
     </main>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const session: BookQuestionsProps = await api
+    .get(`/bookQuestions/${query.id}`)
+    .then((response) => response.data);
+
+  if (!session || session.isAnswered) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
