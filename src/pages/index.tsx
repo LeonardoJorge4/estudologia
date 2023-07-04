@@ -1,15 +1,19 @@
-import { useState } from 'react';
-import { CardBookQuestions } from '../components/CardBookQuestions';
-import styles from '../styles/pages/Home.module.scss';
+import { useEffect, useState } from 'react';
+import { CardBookQuestions } from '@src/components/CardBookQuestions';
+import styles from '@src/styles/pages/Home.module.scss';
 import { useBookQuestions } from '@src/contexts/BookQuestions.context';
 
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
-  const { bookQuestions } = useBookQuestions();
+  const { bookQuestions, fetchBookQuestions } = useBookQuestions();
 
   const bookQuestionsFiltered = bookQuestions.filter((item) =>
     isChecked ? !item.isAnswered : item
   );
+
+  useEffect(() => {
+    fetchBookQuestions();
+  }, []);
 
   return (
     <main className={styles.container}>

@@ -11,6 +11,7 @@ import {
 
 interface BookQuestionsType {
   bookQuestions: BookQuestionsProps[];
+  fetchBookQuestions: () => void;
 }
 
 interface BookQuestionsProviderProps {
@@ -39,7 +40,7 @@ export function BookQuestionsProvider({
   }, [fetchBookQuestions]);
 
   return (
-    <BookQuestionsContext.Provider value={{ bookQuestions }}>
+    <BookQuestionsContext.Provider value={{ bookQuestions, fetchBookQuestions }}>
       {children}
     </BookQuestionsContext.Provider>
   );
