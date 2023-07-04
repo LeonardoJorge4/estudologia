@@ -1,19 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CardBookQuestions } from '@src/components/CardBookQuestions';
 import styles from '@src/styles/pages/Home.module.scss';
-import { useBookQuestions } from '@src/contexts/BookQuestions.context';
+import { api } from '@src/services/api';
+import { BookQuestionsProps } from '@src/@types/bookQuestion';
 
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
-  const { bookQuestions, fetchBookQuestions } = useBookQuestions();
+  const [bookQuestions, setBookQuestions] = useState<BookQuestionsProps[]>([]);
 
   const bookQuestionsFiltered = bookQuestions.filter((item) =>
     isChecked ? !item.isAnswered : item
   );
 
+  const fetchBookQuestions = useCallback(async () => {
+    try {
+      const response = await api.get('/bookQuestions');
+
+      setBookQuestions(response.data);
+    } catch (error) {
+      alert('Erro ao buscar cadernos de questões');
+    }
+  }, []);
+
   useEffect(() => {
     fetchBookQuestions();
-  }, []);
+  }, [fetchBookQuestions]);
 
   return (
     <main className={styles.container}>
