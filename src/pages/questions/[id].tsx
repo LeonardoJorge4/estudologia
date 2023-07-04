@@ -104,8 +104,6 @@ export default function Questions() {
 
   return (
     <main className={styles.container}>
-      {timerIsRunning && <time>{formatTime(elapsedTime)}</time>}
-
       <header>
         <span>{currentQuestion?.questions?.[selectedIndex]?.title}</span>
         <p>{currentQuestion?.questions?.[selectedIndex]?.question}</p>
@@ -118,7 +116,11 @@ export default function Questions() {
           onChange={(event) => setAnswerValue(event.target.value)}
         ></textarea>
 
-        <span>{answerValue.length} Caracteres</span>
+        <div>
+          <span>{answerValue.length} Caracteres</span>
+
+          {timerIsRunning && <time>Tempo: {formatTime(elapsedTime)}</time>}
+        </div>
 
         <Button
           title="Enviar resposta"

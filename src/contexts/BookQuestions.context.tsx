@@ -40,7 +40,9 @@ export function BookQuestionsProvider({
   }, [fetchBookQuestions]);
 
   return (
-    <BookQuestionsContext.Provider value={{ bookQuestions, fetchBookQuestions }}>
+    <BookQuestionsContext.Provider
+      value={{ bookQuestions, fetchBookQuestions }}
+    >
       {children}
     </BookQuestionsContext.Provider>
   );

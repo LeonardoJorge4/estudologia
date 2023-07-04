@@ -3,19 +3,11 @@
   width: 100%;
   margin: 80px auto;
 
-  time {
-    font-size: 1.2rem;
-  }
-
   header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     border-bottom: 1px solid #000;
-
-    span {
-      font-size: 1rem;
-    }
 
     p {
       margin: 12px 0 26px 0;
@@ -28,6 +20,14 @@
       padding: 10px;
       border: none;
       border-radius: 5px;
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      font-size: 1rem;
     }
 
     button {
