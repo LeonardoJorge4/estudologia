@@ -32,8 +32,10 @@ export default function Questions() {
   useEffect(() => {
     if (newAnswers.length > selectedIndex && newAnswers[selectedIndex].answer) {
       setAnswerValue(newAnswers[selectedIndex].answer);
+      setElapsedTime(Number(newAnswers[selectedIndex].time));
     } else {
       setAnswerValue('');
+      setElapsedTime(0);
     }
   }, [selectedIndex, newAnswers]);
 
@@ -89,16 +91,15 @@ export default function Questions() {
       newAnswers[selectedIndex] = newObject;
       alert('Resposta editada com sucesso!');
     }
-
-    setElapsedTime(0);
   }
 
   function handlePrevQuestion() {
-    setElapsedTime(0);
+    setTimerIsRunning(true);
     setSelectedIndex((prevIndex) => prevIndex - 1);
   }
 
   function handleNextQuestion() {
+    setTimerIsRunning(true);
     setSelectedIndex((prevIndex) => prevIndex + 1);
   }
 
